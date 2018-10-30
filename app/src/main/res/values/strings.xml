@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FitMedia</string>
+    <string name="user_info">Usuário:</string>
+    <string name="user_tip">Digite o seu usuário</string>
+    <string name="password_info">Senha:</string>
+    <string name="password_tip">Digite sua senha</string>
+    <string name="btn_login">Entrar</string>
+    <string name="btn_register">Cadastrar-se</string>
+    <string name="name_info">Nome:</string>
+    <string name="name_tip">Digite seu nome</string>
+    <string name="email_info">Email:</string>
+    <string name="email_tip">seuemail@email.com</string>
+</resources>

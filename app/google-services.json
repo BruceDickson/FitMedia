@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "499809601738",
+    "firebase_url": "https://fit-media.firebaseio.com",
+    "project_id": "fit-media",
+    "storage_bucket": "fit-media.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499809601738:android:c78973fce308facb",
+        "android_client_info": {
+          "package_name": "com.fitmedia.fitmedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499809601738-1qb93tcgcgj0aca4k34bemufcnejr4rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fitmedia.fitmedia",
+            "certificate_hash": "65c3c55b7a4dafd7623e87590e50f34a7756dbd0"
+          }
+        },
+        {
+          "client_id": "499809601738-r772vo11o7oshlja0fi2jqqjestklvdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAY44VzPW_XAAeWB5CjanRS8EIf1_wo50"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499809601738-r772vo11o7oshlja0fi2jqqjestklvdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
