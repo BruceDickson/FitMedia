@@ -74,11 +74,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         rd_type = (RadioGroup) findViewById(R.id.rd_type);
 
-        txt_data = (TextView) findViewById(R.id.txt_data);
+        txt_data = (TextView) findViewById(R.id.txt_texto);
 
 
-        dataview = findViewById(R.id.txt_data);
-        data = findViewById(R.id.txt_data);
+        dataview = findViewById(R.id.txt_texto);
+        data = findViewById(R.id.txt_texto);
 
         data.setOnClickListener(new OnClickListener() {
             @Override
