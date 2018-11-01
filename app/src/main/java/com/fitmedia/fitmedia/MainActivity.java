@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private Button btnLogin;
     private Button btnRegister;
+    private String key_user = "kNswpisi7bPJlQ4Gj64Xyf7OFPV2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, TimelineActivity.class);
+                intent.putExtra("key_user", key_user);
                 startActivity(intent);
             }
         });

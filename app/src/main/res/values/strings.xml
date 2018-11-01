@@ -10,4 +10,7 @@
     <string name="name_tip">Digite seu nome</string>
     <string name="email_info">Email:</string>
     <string name="email_tip">seuemail@email.com</string>
+    <string name="txt_post">Post aqui;</string>
+    <string name="edt_post">Digite aqui....</string>
+    <string name="btn_post">Publicar</string>
 </resources>
