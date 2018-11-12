@@ -1,5 +1,7 @@
 package com.fitmedia.fitmedia;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,7 @@ import org.joda.time.LocalDate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -127,6 +131,7 @@ public class TimelineActivity extends AppCompatActivity {
                             cont++;
 
                         }
+                        Collections.shuffle(posts);
                         recyclerView.setAdapter(new Adapter(TimelineActivity.this, posts));
                     }
                     else{
@@ -177,6 +182,13 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
         return true;
     }
 
@@ -199,5 +211,15 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        Toast.makeText(TimelineActivity.this, "POS SEARCH ACT", Toast.LENGTH_SHORT).show();
+        Bundle appData = new Bundle();
+        appData.putString(SearchableActivity.KEY_USER, key_user);
+        startSearch(null, false, appData, false);
+        Toast.makeText(TimelineActivity.this, "POS SEARCH ACT", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }
