@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,9 +36,13 @@ import java.util.Locale;
 public class TimelineActivity extends AppCompatActivity {
 
     private ValueEventListener post_listener;
+    private ValueEventListener follow_listener;
+    private DatabaseReference user_listener;
+
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+    private String name_user;
     private String key_user;
     private String key_post;
     private String content_post;
@@ -53,66 +58,115 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_line);
-        edt_post = (EditText) findViewById(R.id.edt_post);
-        btn_post = (Button) findViewById(R.id.btn_post);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_time_line);
+            edt_post = (EditText) findViewById(R.id.edt_post);
+            btn_post = (Button) findViewById(R.id.btn_post);
 
-        Intent intent = getIntent();
-        key_user = intent.getStringExtra("key_user");
+            Intent intent = getIntent();
+            key_user = intent.getStringExtra("key_user");
+            //name_user = ReferencesHelper.getDatabaseReference().child("users").child(key_user).
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new Adapter(this, posts));
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            recyclerView.setAdapter(new Adapter(this, posts));
+
+            user_listener = ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("fullname");
+
+            user_listener.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    name_user = dataSnapshot.getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            follow_listener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    posts = new ArrayList<Post>();
+                    Integer cont = 0;
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot data : dataSnapshot.getChildren()){
+
+                            String temp_user = data.getKey();
+                            Log.d("ID_FOLLOW", temp_user+"");
+                            posts = new ArrayList<Post>();
+                            post_listener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-        post_listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()){
+                                        for(DataSnapshot data : dataSnapshot.getChildren()){
+                                            Post post = data.getValue(Post.class);
+                                            posts.add(post);
+                                            //Toast.makeText(TimelineActivity.this, "Chego aqui xD!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        recyclerView.setAdapter(new Adapter(TimelineActivity.this, posts));
+                                    }
+                                    else{
+                                        Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
+                                    }
 
-                posts = new ArrayList<Post>();
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        Post post = data.getValue(Post.class);
-                        posts.add(post);
-                        //Toast.makeText(TimelineActivity.this, "Chego aqui xD!", Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    System.out.println("The read failed: " + databaseError.getCode());
+                                }
+                            };
+                            ReferencesHelper.getDatabaseReference().child("posts").orderByChild("id_user").equalTo(temp_user).limitToLast(5).addValueEventListener(post_listener);
+                            cont++;
+
+                        }
+                        recyclerView.setAdapter(new Adapter(TimelineActivity.this, posts));
                     }
-                    recyclerView.setAdapter(new Adapter(TimelineActivity.this, posts));
+                    else{
+                        Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
-                else{
-                    Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
                 }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        };
-        ReferencesHelper.getDatabaseReference().child("posts").orderByChild("id_user").equalTo(key_user).addValueEventListener(post_listener);
+            };
+            ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("following").addValueEventListener(follow_listener);
 
 
 
-        btn_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
 
 
-                date_post = new Date().getTime();
+
+
+            btn_post.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
 
-                key_post = ReferencesHelper.getDatabaseReference().push().getKey();
-                content_post = edt_post.getText().toString();
-                Post post = new Post(content_post, key_user, date_post);
-                ReferencesHelper.getDatabaseReference().child("posts").child(key_post).setValue(post);
+                    date_post = new Date().getTime();
 
-            }
-        });
+
+
+                    key_post = ReferencesHelper.getDatabaseReference().push().getKey();
+                    content_post = edt_post.getText().toString();
+                    Post post = new Post(content_post, key_user, name_user,date_post);
+                    ReferencesHelper.getDatabaseReference().child("posts").child(key_post).setValue(post);
+
+                }
+            });
 
 
 
@@ -140,5 +194,10 @@ public class TimelineActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

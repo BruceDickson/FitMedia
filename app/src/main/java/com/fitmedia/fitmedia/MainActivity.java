@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnRegister;
     private String key_user;
+    private String name_user;
     private String email;
     private String password;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser != null){
             Intent intent = new Intent(MainActivity.this, TimelineActivity.class);
             intent.putExtra("key_user", currentUser.getUid());
+            intent.putExtra("name_user", currentUser.getDisplayName());
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this, TimelineActivity.class);
                                     intent.putExtra("key_user", user.getUid());
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());

@@ -4,15 +4,17 @@ public class Post {
 
     private String content;
     private String id_user;
+    private String name_user;
     private Long date;
 
     public Post(){
 
     }
 
-    public Post(String content, String id_user, Long date) {
+    public Post(String content, String id_user, String name_user, Long date) {
         this.content = content;
         this.id_user = id_user;
+        this.name_user = name_user;
         this.date = date;
     }
 
@@ -39,6 +41,10 @@ public class Post {
     public void setDate(Long date) {
         this.date = date;
     }
+
+    public String getName_user() {return name_user; }
+
+    public void setName_user(String name_user) {this.name_user = name_user; }
 
     @Override
     public String toString() {

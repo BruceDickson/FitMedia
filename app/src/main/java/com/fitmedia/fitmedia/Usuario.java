@@ -1,10 +1,14 @@
 package com.fitmedia.fitmedia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Usuario {
 
     private String fullname;
     private Integer type;
     private long date;
+    private List<String> following = new ArrayList<String>();
 
     public Usuario() {
     }
@@ -38,5 +42,13 @@ public class Usuario {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
     }
 }

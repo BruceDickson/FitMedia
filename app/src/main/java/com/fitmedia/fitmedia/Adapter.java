@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.Date;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,7 +36,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         Log.e("TESTE", posts.get(i).getContent()+"");
-        ((Item)viewHolder).textView.setText(posts.get(i).getContent());
+
+        ((Item)viewHolder).editText.setText(posts.get(i).getContent());
+        ((Item)viewHolder).txt_nome.setText(posts.get(i).getName_user());
+        //((Item)viewHolder).txt_data.setText(new Date(posts.get(i).getDate()).toString());
     }
 
     @Override
@@ -43,10 +48,14 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class Item extends RecyclerView.ViewHolder{
-        TextView textView;
+        EditText editText;
+        TextView txt_nome;
+        TextView txt_data;
         public Item(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.item);
+            editText = (EditText) itemView.findViewById(R.id.edt_texto);
+            txt_nome = (TextView) itemView.findViewById(R.id.txt_nome);
+            txt_data = (TextView) itemView.findViewById(R.id.txt_data2);
         }
     }
 }
