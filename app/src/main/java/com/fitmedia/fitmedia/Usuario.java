@@ -2,22 +2,24 @@ package com.fitmedia.fitmedia;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Usuario {
 
     private String fullname;
     private Integer type;
     private long date;
-    private List<String> following = new ArrayList<String>();
+    private Map<String, Integer> following;
 
     public Usuario() {
     }
 
 
-    public Usuario(String fullname, Integer type, long date) {
+    public Usuario(String fullname, Integer type, long date, Map<String, Integer> following) {
         this.fullname = fullname;
         this.type = type;
         this.date = date;
+        this.following = following;
     }
 
     public String getFullname() {
@@ -44,11 +46,5 @@ public class Usuario {
         this.date = date;
     }
 
-    public List<String> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(List<String> following) {
-        this.following = following;
-    }
+    public Map<String, Integer>  getFollowing() { return following; }
 }

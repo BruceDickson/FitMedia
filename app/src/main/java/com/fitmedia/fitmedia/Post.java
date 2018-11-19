@@ -1,11 +1,14 @@
 package com.fitmedia.fitmedia;
 
+import java.util.Map;
+
 public class Post {
 
     private String content;
     private String id_user;
     private String name_user;
     private Long date;
+
 
     public Post(){
 
@@ -45,6 +48,8 @@ public class Post {
     public String getName_user() {return name_user; }
 
     public void setName_user(String name_user) {this.name_user = name_user; }
+
+
 
     @Override
     public String toString() {

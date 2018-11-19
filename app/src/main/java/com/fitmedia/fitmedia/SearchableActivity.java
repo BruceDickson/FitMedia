@@ -26,13 +26,19 @@ public class SearchableActivity extends ListActivity {
 
     private List<String> users = new ArrayList<String>();
     private List<String> following = new ArrayList<String>();
+    private List<Usuario> users_obj = new ArrayList<Usuario>();
+
+    private ListView list;
 
     private String key_user;
+
+    private SearchAdapter search_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+        list = (ListView) findViewById(android.R.id.list);
 
         handleIntent(getIntent());
 
@@ -49,7 +55,10 @@ public class SearchableActivity extends ListActivity {
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             String temp_user = data.getKey();
-                            users.add(temp_user);
+                            if(!temp_user.equals(key_user)){
+                                users.add(temp_user);
+                                users_obj.add(data.getValue(Usuario.class));
+                            }
                         }
 
                     } else {
@@ -100,6 +109,8 @@ public class SearchableActivity extends ListActivity {
 
 
 
+            search_adapter = new SearchAdapter(key_user, following, users, users_obj , SearchableActivity.this);
+            list.setAdapter(search_adapter);
 
         }
     }
