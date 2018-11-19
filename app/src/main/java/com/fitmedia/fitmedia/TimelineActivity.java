@@ -187,7 +187,7 @@ public class TimelineActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        searchView.setIconifiedByDefault(true);
 
         return true;
     }
@@ -196,6 +196,9 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.search:
+                onSearchRequested();
+                break;
             case R.id.txt_sair:
                 mAuth.signOut();
                 finish();
@@ -206,6 +209,7 @@ public class TimelineActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     @Override
@@ -215,6 +219,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onSearchRequested() {
+        Log.d("ID_BUNDLE", key_user);
         Toast.makeText(TimelineActivity.this, "POS SEARCH ACT", Toast.LENGTH_SHORT).show();
         Bundle appData = new Bundle();
         appData.putString(SearchableActivity.KEY_USER, key_user);

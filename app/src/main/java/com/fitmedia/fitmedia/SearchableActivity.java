@@ -24,7 +24,7 @@ public class SearchableActivity extends ListActivity {
     private ValueEventListener follow_listener;
     private ValueEventListener user_follow_listener;
 
-    private List<Usuario> users = new ArrayList<Usuario>();
+    private List<String> users = new ArrayList<String>();
     private List<String> following = new ArrayList<String>();
 
     private String key_user;
@@ -37,7 +37,6 @@ public class SearchableActivity extends ListActivity {
         handleIntent(getIntent());
 
 
-
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -47,19 +46,16 @@ public class SearchableActivity extends ListActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                    if(dataSnapshot.exists()){
-                        for(DataSnapshot data : dataSnapshot.getChildren()){
-
-                            Usuario temp_user = data.getValue(Usuario.class);
-                            Log.d("ID_FOLLOW", temp_user+"");
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            String temp_user = data.getKey();
                             users.add(temp_user);
                         }
 
+                    } else {
+                        // Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                       // Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
-                    }
-
+                    System.out.println(users.toString());
 
                 }
 
@@ -81,19 +77,18 @@ public class SearchableActivity extends ListActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                    if(dataSnapshot.exists()){
-                        for(DataSnapshot data : dataSnapshot.getChildren()){
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
 
                             String temp_user = data.getKey();
                             following.add(temp_user);
                         }
 
-                    }
-                    else{
+                    } else {
                         //Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
                     }
 
-
+                    System.out.println(following.toString());
                 }
 
                 @Override
@@ -105,12 +100,11 @@ public class SearchableActivity extends ListActivity {
 
 
 
+
         }
-
-
-
-
     }
+
+
 
     public void onNewIntent(Intent intent) {
         setIntent(intent);
