@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +37,9 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         Log.e("TESTE", posts.get(i).getContent()+"");
 
-        ((Item)viewHolder).txt_content.setText(posts.get(i).getContent());
-        ((Item)viewHolder).txt_nome.setText(posts.get(i).getName_user());
-        DateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        ((Item)viewHolder).txt_data.setText(f.format(new Date(posts.get(i).getDate())));
+        ((Item)viewHolder).editText.setText(posts.get(i).getContent());
+        ((Item)viewHolder).txt_nome.setText(posts.get(i).getId_user());
+        ((Item)viewHolder).txt_data.setText(new Date(posts.get(i).getDate()).toString());
     }
 
     @Override
@@ -51,12 +48,12 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class Item extends RecyclerView.ViewHolder{
-        TextView txt_content;
+        EditText editText;
         TextView txt_nome;
         TextView txt_data;
         public Item(@NonNull View itemView) {
             super(itemView);
-            txt_content = (TextView) itemView.findViewById(R.id.txt_content);
+            editText = (EditText) itemView.findViewById(R.id.edt_texto);
             txt_nome = (TextView) itemView.findViewById(R.id.txt_nome);
             txt_data = (TextView) itemView.findViewById(R.id.txt_data2);
         }
