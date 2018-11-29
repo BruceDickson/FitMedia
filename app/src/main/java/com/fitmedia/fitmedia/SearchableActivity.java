@@ -51,7 +51,6 @@ public class SearchableActivity extends ListActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             String temp_user = data.getKey();
@@ -84,7 +83,7 @@ public class SearchableActivity extends ListActivity {
             user_follow_listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
+                    following.clear();
 
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot data : dataSnapshot.getChildren()) {

@@ -53,6 +53,8 @@ public class SearchAdapter extends BaseAdapter {
         txt_follow.setText(users_obj.get(position).getFullname());
         txt_type_follow.setText(types[users_obj.get(position).getType()]);
 
+
+
         for(String str : following){
             if(str.trim().contains(users.get(position))){
                 btn_follow.setText("SEGUINDO");
@@ -63,11 +65,19 @@ public class SearchAdapter extends BaseAdapter {
         btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("following").child(current_user).setValue(0);
-                btn_follow.setText("SEGUINDO");
-                btn_follow.setActivated(false);
+                if(btn_follow.getText().equals("SEGUIR")){
+                    ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("following").child(current_user).setValue(0);
+                    btn_follow.setText("SEGUINDO");
+                    btn_follow.setActivated(false);
+                }else{
+                    ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("following").child(current_user).removeValue();
+                    btn_follow.setText("SEGUIR");
+                    btn_follow.setActivated(true);
+                }
+
             }
         });
+
 
         return v;
     }

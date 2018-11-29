@@ -1,19 +1,25 @@
 package com.fitmedia.fitmedia;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class Usuario {
 
     private String fullname;
     private Integer type;
     private long date;
+    private Map<String, Integer> following;
 
     public Usuario() {
     }
 
 
-    public Usuario(String fullname, Integer type, long date) {
+    public Usuario(String fullname, Integer type, long date, Map<String, Integer> following) {
         this.fullname = fullname;
         this.type = type;
         this.date = date;
+        this.following = following;
     }
 
     public String getFullname() {
@@ -39,4 +45,6 @@ public class Usuario {
     public void setDate(long date) {
         this.date = date;
     }
+
+    public Map<String, Integer>  getFollowing() { return following; }
 }
