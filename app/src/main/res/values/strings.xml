@@ -20,4 +20,5 @@
     <string name="search_title">Buscar</string>
     <string name="txt_follow">Nome da Pessoa</string>
     <string name="tip_follow">Seguir</string>
+    <string name="title_activity_comment">CommentActivity</string>
 </resources>

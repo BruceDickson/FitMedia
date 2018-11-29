@@ -15,10 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -60,9 +62,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
-    private  EditText edt_post;
+    private EditText edt_post;
+
 
     private Button btn_post;
+
 
     private List<Post> posts = new ArrayList<Post>();
 
@@ -72,6 +76,7 @@ public class TimelineActivity extends AppCompatActivity {
             setContentView(R.layout.activity_time_line);
             edt_post = (EditText) findViewById(R.id.edt_post);
             btn_post = (Button) findViewById(R.id.btn_post);
+
             setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
             Intent intent = getIntent();
             key_user = intent.getStringExtra("key_user");
@@ -111,8 +116,6 @@ public class TimelineActivity extends AppCompatActivity {
                             post_listener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-
                                     if(dataSnapshot.exists()){
                                         for(DataSnapshot data : dataSnapshot.getChildren()){
                                             Post post = data.getValue(Post.class);
@@ -141,7 +144,7 @@ public class TimelineActivity extends AppCompatActivity {
                         recyclerView.setAdapter(new Adapter(TimelineActivity.this, posts));
                     }
                     else{
-                        Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(TimelineActivity.this, "Fudeo menô!", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -155,25 +158,13 @@ public class TimelineActivity extends AppCompatActivity {
             ReferencesHelper.getDatabaseReference().child("users").child(key_user).child("following").addValueEventListener(follow_listener);
 
 
-
-
-
-
-
-
             btn_post.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
-
                     date_post = new Date().getTime();
-
-
-
                     key_post = ReferencesHelper.getDatabaseReference().push().getKey();
                     content_post = edt_post.getText().toString();
-                    Post post = new Post(content_post, key_user, name_user,date_post);
+                    Post post = new Post(content_post, key_user, key_post, name_user,date_post);
                     ReferencesHelper.getDatabaseReference().child("posts").child(key_post).setValue(post);
 
                 }

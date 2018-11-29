@@ -42,7 +42,6 @@ public class SearchableActivity extends ListActivity {
 
         handleIntent(getIntent());
 
-
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -52,6 +51,7 @@ public class SearchableActivity extends ListActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
+                        users_obj.clear();
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             String temp_user = data.getKey();
                             if(!temp_user.equals(key_user)){
@@ -83,9 +83,8 @@ public class SearchableActivity extends ListActivity {
             user_follow_listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    following.clear();
-
                     if (dataSnapshot.exists()) {
+                        following.clear();
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
 
                             String temp_user = data.getKey();

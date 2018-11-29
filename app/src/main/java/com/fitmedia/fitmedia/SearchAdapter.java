@@ -12,9 +12,9 @@ import java.util.List;
 
 public class SearchAdapter extends BaseAdapter {
 
-    List<String> following;
-    List<String> users;
-    List<Usuario> users_obj;
+    private List<String> following;
+    private List<String> users;
+    private List<Usuario> users_obj;
     private String key_user;
     private final Activity activity;
     private String[] types = {"Atleta", "Nutricionista", "Ed Físico"};
@@ -74,7 +74,6 @@ public class SearchAdapter extends BaseAdapter {
                     btn_follow.setText("SEGUIR");
                     btn_follow.setActivated(true);
                 }
-
             }
         });
 

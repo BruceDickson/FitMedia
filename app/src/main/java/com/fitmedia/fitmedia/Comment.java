@@ -1,8 +1,8 @@
 package com.fitmedia.fitmedia;
 
-import java.util.Map;
+import java.io.Serializable;
 
-public class Post {
+public class Comment implements Serializable {
 
     private String content;
     private String id_user;
@@ -10,19 +10,15 @@ public class Post {
     private String id_post;
     private Long date;
 
-
-    public Post(){
-
-    }
-
-    public Post(String content, String id_user, String id_post, String name_user, Long date) {
+    public Comment(String content, String id_user, String id_post, String name_user, Long date) {
         this.content = content;
         this.id_user = id_user;
-        this.id_post = id_post;
         this.name_user = name_user;
-        this.id_post = id_post;
         this.date = date;
+        this.id_post = id_post;
     }
+
+    public Comment(){}
 
     public String getContent() {
         return content;
@@ -40,6 +36,14 @@ public class Post {
         this.id_user = id_user;
     }
 
+    public String getName_user() {
+        return name_user;
+    }
+
+    public void setName_user(String name_user) {
+        this.name_user = name_user;
+    }
+
     public Long getDate() {
         return date;
     }
@@ -48,24 +52,11 @@ public class Post {
         this.date = date;
     }
 
-    public String getName_user() {return name_user; }
-
-    public void setName_user(String name_user) {this.name_user = name_user; }
-
     public String getId_post() {
         return id_post;
     }
 
     public void setId_post(String id_post) {
         this.id_post = id_post;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "content='" + content + '\'' +
-                ", id_user='" + id_user + '\'' +
-                ", date=" + date +
-                '}';
     }
 }
