@@ -15,4 +15,7 @@
     <string name="btn_post">Publicar</string>
     <string name="txt_sair">Sair</string>
     <string name="help">Ajuda</string>
+    <string name="app_label">Camada Busca</string>
+    <string name="search_hint">Dica Busca</string>
+    <string name="search_title">Buscar</string>
 </resources>
